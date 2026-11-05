@@ -1,0 +1,5 @@
+syntax = "proto3";
+package stacklab.users;
+service UserService { rpc GetProfile (ProfileRequest) returns (UserProfile); }
+message ProfileRequest { string user_id = 1; }
+message UserProfile { string user_id = 1; string display_name = 2; string plan = 3; }

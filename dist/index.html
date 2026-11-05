@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b0f14" />
+    <title>StackLab — Full-stack systems, made visible</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand"><span class="brand-mark">✦</span><span>STACK<span class="brand-accent">LAB</span></span></div>
+        <div class="workspace-switcher"><span class="workspace-dot"></span><span>Personal workspace</span><span class="chevron">⌄</span></div>
+
+        <nav class="primary-nav" aria-label="Main navigation">
+          <a class="nav-link active" href="#overview"><span class="nav-icon">▦</span>Overview</a>
+          <a class="nav-link" href="#labs"><span class="nav-icon">◈</span>All labs <span class="nav-count">12</span></a>
+          <a class="nav-link" href="#activity"><span class="nav-icon">↗</span>Activity</a>
+        </nav>
+
+        <div class="nav-section-label">YOUR LABS</div>
+        <nav class="lab-nav" aria-label="Labs">
+          <a href="#graphql" data-lab-nav="graphql"><span class="status-dot purple"></span>GraphQL gateway</a>
+          <a href="#ai-grounding" data-lab-nav="ai-grounding"><span class="status-dot orange"></span>AI grounding</a>
+          <a href="#payments" data-lab-nav="payments"><span class="status-dot green"></span>Payments</a>
+          <a href="#grpc" data-lab-nav="grpc"><span class="status-dot blue"></span>gRPC services</a>
+        </nav>
+
+        <div class="sidebar-footer"><div class="avatar">A</div><div><strong>Alex Morgan</strong><small>Learning mode</small></div><span class="more">•••</span></div>
+      </aside>
+
+      <main class="main-content" id="overview">
+        <header class="topbar"><div class="breadcrumbs"><span>Workspace</span><span>/</span><strong>Overview</strong></div><div class="top-actions"><button class="icon-button" aria-label="Notifications">♢<span class="notification-dot"></span></button><button class="avatar small">A</button></div></header>
+
+        <section class="hero-section">
+          <div class="hero-copy"><p class="eyebrow">THURSDAY, NOVEMBER 05, 2026 <span class="eyebrow-line"></span></p><h1>Make the stack<br /><em>click.</em></h1><p class="hero-subtitle">A hands-on lab for the systems behind modern products.<br />Build it. Break it. Understand it.</p><div class="hero-actions"><button class="button primary" id="continue-btn">Continue learning <span>→</span></button><button class="button quiet" id="random-btn">Surprise me <span>✦</span></button></div></div>
+          <div class="hero-orbit" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit-core"><span>✦</span></div><div class="orbit-label label-one">API</div><div class="orbit-label label-two">DATA</div><div class="orbit-label label-three">AI</div></div>
+        </section>
+
+        <section class="metrics-grid" aria-label="Progress summary"><div class="metric-card"><span class="metric-label">LABS COMPLETED</span><strong>04 <small>/ 12</small></strong><div class="progress"><span style="width: 33%"></span></div><span class="metric-note">+1 this week</span></div><div class="metric-card"><span class="metric-label">TIME IN LAB</span><strong>08<span class="metric-unit">h</span> 42<span class="metric-unit">m</span></strong><span class="metric-note">Your best: 2h 18m</span></div><div class="metric-card streak-card"><span class="metric-label">CURRENT STREAK</span><strong>06 <span class="streak-fire">✹</span></strong><span class="metric-note">Keep the chain alive</span><div class="week-dots"><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i></i></div></div></section>
+
+        <section class="section-block" id="labs"><div class="section-heading"><div><p class="eyebrow">THE LAB FLOOR</p><h2>Pick a system to explore</h2></div><div class="section-controls"><div class="search-box"><span>⌕</span><input id="lab-search" type="search" placeholder="Search labs..." /></div><button class="filter-button" id="filter-btn">All labs <span>⌄</span></button></div></div><div class="category-tabs" role="tablist"><button class="category-tab active" data-category="all">All</button><button class="category-tab" data-category="backend">Backend</button><button class="category-tab" data-category="frontend">Frontend</button><button class="category-tab" data-category="infra">Infrastructure</button><button class="category-tab" data-category="ai">AI</button></div><div class="labs-grid" id="labs-grid"></div></section>
+
+        <section class="section-block active-lab-section" id="activity"><div class="section-heading"><div><p class="eyebrow">LIVE WORKBENCH</p><h2 id="workbench-title">GraphQL gateway</h2></div><span class="live-pill"><i></i> Sandbox online</span></div><div class="workbench"><div class="workbench-info"><div class="workbench-icon purple-bg">◈</div><p id="workbench-description">Design a typed API layer with a schema, resolvers, and a query that feels like a conversation with your data.</p><div class="tags" id="workbench-tags"><span>GraphQL</span><span>NestJS</span><span>PostgreSQL</span></div><div class="workbench-meta"><span>◷ 35 min</span><span>◉ Intermediate</span><span>✓ 3 / 7 tasks</span></div></div><div class="request-panel"><div class="panel-tabs"><button class="panel-tab active">Request</button><button class="panel-tab">Schema</button><button class="panel-tab">Resolver</button><span class="endpoint-chip" id="endpoint-chip">POST /graphql</span></div><pre class="code-window"><code id="request-code"><span class="code-purple">query</span> <span class="code-yellow">LabProgress</span> {
+  me {
+    name
+    labs(status: IN_PROGRESS) {
+      title
+      completion
+    }
+  }
+}</code></pre><button class="run-button" id="run-btn"><span>▶</span> Run request <kbd>⌘ ↵</kbd></button><div class="response-label">RESPONSE <span id="response-status">200 OK · 84ms</span></div><pre class="response-window" id="response-window">{
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"me"</span>: { <span class="json-key">"name"</span>: <span class="json-string">"Alex Morgan"</span>, <span class="json-key">"labs"</span>: [<span class="json-number">3</span>] }
+  }
+}</pre></div></div></section>
+        <footer><span>STACKLAB / v0.1.0</span><span>Built for curious engineers <span class="footer-spark">✦</span></span></footer>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+
+# Next.js and application build output
+apps/web/.next/
+apps/web/out/
+apps/*/dist/
+.turbo/
+.vercel/
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Test and coverage output
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# Logs and local runtime files
+*.log
+*.pid
+*.pid.lock
+tmp/
+.cache/
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
