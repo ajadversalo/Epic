@@ -7,6 +7,10 @@
     "dev:all": "node scripts/dev.mjs all",
     "dev:web": "npm --workspace apps/web run dev",
     "dev:api": "npm --workspace apps/nest-api run start:dev",
+    "dev:graphql": "npm --workspace apps/graphql-api run dev",
+    "dev:spring": "mvn -f apps/spring-api/pom.xml spring-boot:run",
+    "dev:express": "npm --workspace apps/express-api run dev",
+    "dev:fastify": "npm --workspace apps/fastify-api run dev",
     "dev:node": "npm --workspace apps/node-lab run dev",
     "build": "npm run build --workspaces"
   }

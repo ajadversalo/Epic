@@ -1,0 +1,15 @@
+import express from 'express';
+import { randomUUID } from 'node:crypto';
+const app = express(); app.use(express.json());
+type Lab = { id:string; slug:string; title:string; description:string; status:string; endpoint:string; createdAt:string; updatedAt:string };
+const labs = new Map<string, Lab>();
+const seed = (slug:string,title:string,status:string) => { const t=new Date().toISOString(); labs.set(slug,{id:slug,slug,title,description:`${title} CRUD lab.`,status,endpoint:`/labs/${slug}`,createdAt:t,updatedAt:t}); };
+seed('express','Express CRUD','ready'); seed('nestjs','NestJS API','ready');
+const find = (id:string) => [...labs.values()].find(lab=>lab.id===id||lab.slug===id);
+app.get('/labs',(_req,res)=>res.json([...labs.values()]));
+app.get('/labs/:id',(req,res)=>{const lab=find(req.params.id); return lab?res.json(lab):res.sendStatus(404);});
+app.post('/labs',(req,res)=>{const input=req.body;if(!input?.slug||!input?.title)return res.status(400).json({error:'slug and title are required'});if(find(input.slug))return res.status(409).json({error:'slug already exists'});const t=new Date().toISOString();const lab={id:randomUUID(),slug:input.slug,title:input.title,description:input.description??'',status:input.status??'planned',endpoint:input.endpoint??`/labs/${input.slug}`,createdAt:t,updatedAt:t};labs.set(lab.id,lab);res.status(201).json(lab);});
+const update=(req:express.Request,res:express.Response)=>{const current=find(String(req.params.id));if(!current)return res.sendStatus(404);const next={...current,...req.body,updatedAt:new Date().toISOString()};labs.set(current.id,next);res.json(next);};
+app.put('/labs/:id',update); app.patch('/labs/:id',update);
+app.delete('/labs/:id',(req,res)=>{const lab=find(req.params.id);if(!lab)return res.sendStatus(404);labs.delete(lab.id);res.json({deleted:true,id:lab.id});});
+app.listen(4004,()=>console.log('Express API at http://localhost:4004'));

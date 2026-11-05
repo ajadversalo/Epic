@@ -1,0 +1,10 @@
+import Fastify from 'fastify';
+import { randomUUID } from 'node:crypto';
+const app=Fastify({logger:true}); type Lab={id:string;slug:string;title:string;description:string;status:string;endpoint:string;createdAt:string;updatedAt:string}; const labs=new Map<string,Lab>();
+const seed=(slug:string,title:string,status:string)=>{const t=new Date().toISOString();labs.set(slug,{id:slug,slug,title,description:`${title} CRUD lab.`,status,endpoint:`/labs/${slug}`,createdAt:t,updatedAt:t});}; seed('fastify','Fastify CRUD','ready');
+const find=(id:string)=>[...labs.values()].find(lab=>lab.id===id||lab.slug===id);
+app.get('/labs',async()=>[...labs.values()]); app.get<{Params:{id:string}}>('/labs/:id',async(req,reply)=>{const lab=find(req.params.id);return lab??reply.code(404).send();});
+app.post<{Body:Partial<Lab>}>('/labs',async(req,reply)=>{const input=req.body;if(!input.slug||!input.title)return reply.code(400).send({error:'slug and title are required'});if(find(input.slug))return reply.code(409).send({error:'slug already exists'});const t=new Date().toISOString();const lab={id:randomUUID(),slug:input.slug,title:input.title,description:input.description??'',status:input.status??'planned',endpoint:input.endpoint??`/labs/${input.slug}`,createdAt:t,updatedAt:t};labs.set(lab.id,lab);return reply.code(201).send(lab);});
+const update=async(req:any,reply:any)=>{const current=find(req.params.id);if(!current)return reply.code(404).send();const next={...current,...req.body,updatedAt:new Date().toISOString()};labs.set(current.id,next);return next;}; app.put('/labs/:id',update);app.patch('/labs/:id',update);
+app.delete<{Params:{id:string}}>('/labs/:id',async(req,reply)=>{const lab=find(req.params.id);if(!lab)return reply.code(404).send();labs.delete(lab.id);return {deleted:true,id:lab.id};});
+app.listen({port:4005,host:'0.0.0.0'}).then(()=>console.log('Fastify API at http://localhost:4005'));

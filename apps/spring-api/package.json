@@ -1,0 +1,5 @@
+{
+  "name": "@stacklab/spring-api",
+  "private": true,
+  "scripts": { "dev": "mvn -f pom.xml spring-boot:run" }
+}

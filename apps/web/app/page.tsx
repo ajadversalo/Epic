@@ -8,7 +8,7 @@ const sections = [
     ['graphql', 'GraphQL gateway', '35 min'], ['grpc', 'gRPC services', '40 min'], ['queues', 'Queues & workers', '35 min'], ['events', 'Event-driven systems', '']
   ]},
   { number: '3', icon: 'o', tone: 'green', title: 'Backend', items: [
-    ['nestjs', 'NestJS API', ''], ['node', 'Node.js internals', '25 min'], ['authentication', 'Authentication', ''], ['payments', 'Payments', '45 min'], ['databases', 'Databases', '']
+    ['nestjs', 'NestJS API', ''], ['express', 'Express API', ''], ['fastify', 'Fastify API', ''], ['fastapi', 'FastAPI', ''], ['django', 'Django REST Framework', ''], ['aspnet', 'ASP.NET Core', ''], ['fiber', 'Go Fiber', ''], ['spring-boot', 'Spring Boot API', ''], ['node', 'Node.js internals', '25 min'], ['authentication', 'Authentication', ''], ['payments', 'Payments', '45 min'], ['databases', 'Databases', '']
   ]},
   { number: '4', icon: 'o', tone: 'blue', title: 'Frontend', items: [
     ['nextjs', 'Next.js Server Components', ''], ['server-actions', 'Server Actions', ''], ['caching', 'Caching & revalidation', '']
