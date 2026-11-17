@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 type Operation = { path: string; name: string; description: string; body: string };
 const operations: Operation[] = [
+  { path: '/idea-brief', name: 'Idea to build brief', description: 'Turn a plain idea into a typed product brief.', body: '{\n  "input": "A tiny app that turns a messy weekend plan into a fair schedule for friends."\n}' },
   { path: '/generate', name: 'Basic generation', description: 'Generate text from a prompt.', body: '{\n  "prompt": "Explain REST APIs in three sentences."\n}' },
   { path: '/chat', name: 'Chat history', description: 'Send multi-turn messages.', body: '{\n  "messages": [\n    { "role": "user", "text": "What is GraphQL?" },\n    { "role": "assistant", "text": "GraphQL is a typed API query language." },\n    { "role": "user", "text": "How does it compare to REST?" }\n  ]\n}' },
   { path: '/temperature', name: 'Temperature', description: 'Explore sampling controls.', body: '{\n  "prompt": "Name a creative task app.",\n  "temperature": 0.9,\n  "topP": 0.95,\n  "topK": 40\n}' },

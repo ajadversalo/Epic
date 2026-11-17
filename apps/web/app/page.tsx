@@ -1,7 +1,9 @@
 import Link from 'next/link';
 
 const sections = [
-  { number: '1', icon: 'o', tone: 'orange', title: 'AI', items: []},
+  { number: '1', icon: 'o', tone: 'orange', title: 'AI', items: [
+    ['ai-idea-brief', 'AI Idea to Build Brief', '']
+  ]},
   { number: '2', icon: 'o', tone: 'purple', title: 'Architecture', items: [
     ['graphql', 'GraphQL gateway', '35 min'], ['grpc', 'gRPC services', '40 min'], ['queues', 'Queues & workers', '35 min'], ['events', 'Event-driven systems', '']
   ]},

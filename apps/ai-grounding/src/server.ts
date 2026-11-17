@@ -1,4 +1,5 @@
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
+import { z } from 'zod';
 
 type Json = Record<string, unknown>;
 const port = Number(process.env.PORT ?? 4002);
@@ -8,6 +9,26 @@ const documents = [
   { id: 'grounding.md', text: 'Grounding retrieves relevant context before generation and returns citations with the answer.' },
   { id: 'architecture.md', text: 'StackLab uses separate labs so each system boundary can be observed independently.' },
 ];
+const IdeaBrief = z.object({
+  title: z.string().max(80),
+  audience: z.string().max(120),
+  problem: z.string().max(240),
+  features: z.array(z.string().max(120)).min(2).max(5),
+  constraints: z.array(z.string().max(120)).max(4),
+  nextStep: z.string().max(180),
+});
+const ideaBriefSchema: Json = {
+  type: 'OBJECT',
+  properties: {
+    title: { type: 'STRING' },
+    audience: { type: 'STRING' },
+    problem: { type: 'STRING' },
+    features: { type: 'ARRAY', items: { type: 'STRING' } },
+    constraints: { type: 'ARRAY', items: { type: 'STRING' } },
+    nextStep: { type: 'STRING' },
+  },
+  required: ['title', 'audience', 'problem', 'features', 'constraints', 'nextStep'],
+};
 
 async function gemini(path: string, body: Json) {
   if (!apiKey) return { mock: true, model, text: mockText(body), candidates: [], usageMetadata: { promptTokenCount: 0, candidatesTokenCount: 0, totalTokenCount: 0 } };
@@ -26,6 +47,18 @@ function jsonResponse(response: ServerResponse, status: number, payload: unknown
 async function readBody(request: IncomingMessage): Promise<Json> { let raw = ''; for await (const chunk of request) raw += chunk; return raw ? JSON.parse(raw) as Json : {}; }
 function inputText(body: Json) { return typeof body.prompt === 'string' ? body.prompt : typeof body.text === 'string' ? body.text : ''; }
 function generateBody(body: Json, extra: Json = {}): Json { return { contents: contents(inputText(body)), ...extra }; }
+function ideaBriefMock(input: string): Json {
+  const clean = input.replace(/\s+/g, ' ').trim();
+  return IdeaBrief.parse({
+    title: clean.split(/[.!?]/)[0].slice(0, 80) || 'New product idea',
+    audience: 'People who want a simpler way to act on this idea',
+    problem: clean.slice(0, 240) || 'The idea needs a clear first user problem.',
+    features: ['Capture the core input', 'Turn it into an actionable plan', 'Show the next useful step'],
+    constraints: ['Keep the first version focused', 'Validate the workflow with real users'],
+    nextStep: 'Prototype the smallest end-to-end workflow and test it with three users.',
+  });
+}
+function ideaBriefPrompt(input: string) { return `Turn this product idea into a concise build brief. Return only the requested fields.\n\nIdea:\n${input}`; }
 
 async function handle(path: string, body: Json, response: ServerResponse) {
   if (path === '/health') return jsonResponse(response, 200, { ok: true, provider: 'gemini', configured: Boolean(apiKey), model });
@@ -52,6 +85,14 @@ async function handle(path: string, body: Json, response: ServerResponse) {
   }
   if (path === '/structured-output') {
     return jsonResponse(response, 200, await gemini('generateContent', generateBody(body, { generationConfig: { responseMimeType: 'application/json', responseSchema: body.schema ?? { type: 'object' } } })));
+  }
+  if (path === '/idea-brief') {
+    const input = String(body.input ?? body.prompt ?? body.text ?? '');
+    if (!input.trim()) return jsonResponse(response, 400, { error: 'input, prompt, or text is required' });
+    if (!apiKey) return jsonResponse(response, 200, { object: ideaBriefMock(input), mock: true, model });
+    const result = await gemini('generateContent', { contents: contents(ideaBriefPrompt(input)), generationConfig: { responseMimeType: 'application/json', responseSchema: ideaBriefSchema } });
+    const raw = String(textOf(result));
+    return jsonResponse(response, 200, { object: IdeaBrief.parse(JSON.parse(raw)), mock: false, model });
   }
   if (path === '/function-calling') {
     const tools = [{ functionDeclarations: [{ name: 'get_weather', description: 'Get the current weather for a city.', parameters: { type: 'OBJECT', properties: { city: { type: 'STRING' } }, required: ['city'] } }] }];

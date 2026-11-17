@@ -30,6 +30,7 @@ const apis: Api[] = [
   { name: 'Create checkout', service: 'NestJS API', transport: 'REST', method: 'POST', endpoint: '/payments/checkout', port: '4000', lab: 'payments', source: 'apps/nest-api/src/payments.controller.ts', status: 'Ready' },
   { name: 'Lab queries', service: 'GraphQL API', transport: 'GraphQL', method: 'POST', endpoint: '/graphql', port: '4001', lab: 'graphql', source: 'apps/graphql-api/src/server.ts', status: 'Ready' },
   { name: 'Grounded answer', service: 'AI grounding', transport: 'REST', method: 'POST', endpoint: '/answer', port: '4002', lab: 'ai-grounding', source: 'apps/ai-grounding/src/server.ts', status: 'Ready' },
+  { name: 'Idea to build brief', service: 'AI grounding', transport: 'REST', method: 'POST', endpoint: '/idea-brief', port: '4002', lab: 'ai-idea-brief', source: 'apps/ai-grounding/src/server.ts', status: 'Ready' },
   { name: 'Basic generation', service: 'Gemini AI', transport: 'REST', method: 'POST', endpoint: '/generate', port: '4002', lab: 'prompt-engineering', source: 'apps/ai-grounding/src/server.ts', status: 'Configured' },
   { name: 'Chat history', service: 'Gemini AI', transport: 'REST', method: 'POST', endpoint: '/chat', port: '4002', lab: 'prompt-engineering', source: 'apps/ai-grounding/src/server.ts', status: 'Configured' },
   { name: 'Temperature', service: 'Gemini AI', transport: 'REST', method: 'POST', endpoint: '/temperature', port: '4002', lab: 'ai-temperature', source: 'apps/ai-grounding/src/server.ts', status: 'Configured' },

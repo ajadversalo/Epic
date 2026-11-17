@@ -11,6 +11,7 @@ const endpointMap: Record<string, string> = {
   'ai-temperature': 'http://localhost:4002/temperature',
   'prompt-engineering': 'http://localhost:4002/generate',
   rag: 'http://localhost:4002/rag',
+  'ai-idea-brief': 'http://localhost:4002/idea-brief',
   payments: 'http://localhost:4000/payments/checkout',
   grpc: 'rpc UserService.GetProfile',
   authentication: 'http://localhost:4000/auth/login',
@@ -71,7 +72,7 @@ export default async function LabPage({ params }: Props) {
       <EndpointExplorer endpoints={crudEndpoints} baseUrl={endpoint.replace('/labs', '')} />
     </section>}
     {slug === 'graphql' && <GraphQLExplorer />}
-    {['ai-grounding', 'ai-temperature', 'prompt-engineering', 'rag', 'ai-curriculum', 'ai-engineering-roadmap', 'zod'].includes(slug) && <AIExplorer />}
+    {['ai-grounding', 'ai-temperature', 'prompt-engineering', 'rag', 'ai-curriculum', 'ai-engineering-roadmap', 'zod', 'ai-idea-brief'].includes(slug) && <AIExplorer />}
     <section className="terminal"><div className="terminal-bar"><i /><i /><i /><span>{endpoint}</span></div><pre>{'// Server Component\nconst response = await fetch(\'' + endpoint + '\', {\n  method: \'POST\',\n  cache: \'no-store\'\n});\n\nconst result = await response.json();'}</pre></section>
   </main>;
 }
