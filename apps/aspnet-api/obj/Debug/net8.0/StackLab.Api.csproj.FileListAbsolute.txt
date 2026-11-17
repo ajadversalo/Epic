@@ -1,0 +1,7 @@
+C:\repos\Epic\apps\aspnet-api\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\repos\Epic\apps\aspnet-api\obj\Debug\net8.0\StackLab.Api.GeneratedMSBuildEditorConfig.editorconfig
+C:\repos\Epic\apps\aspnet-api\obj\Debug\net8.0\StackLab.Api.AssemblyInfoInputs.cache
+C:\repos\Epic\apps\aspnet-api\obj\Debug\net8.0\StackLab.Api.AssemblyInfo.cs
+C:\repos\Epic\apps\aspnet-api\obj\Debug\net8.0\StackLab.Api.csproj.CoreCompileInputs.cache
+C:\repos\Epic\apps\aspnet-api\obj\Debug\net8.0\StackLab.Api.MvcApplicationPartsAssemblyInfo.cache
+C:\repos\Epic\apps\aspnet-api\obj\Debug\net8.0\StackLab.Api.sourcelink.json
